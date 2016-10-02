@@ -2,6 +2,7 @@
 #define __ENTITY_HPP__
 
 #include "component.hpp"
+#include "message.hpp"
 #include <memory>
 #include <unordered_map>
 
@@ -27,7 +28,15 @@ class Entity final {
 
 		void addComponent(std::shared_ptr<Component> c) {
 			ComponentId id = getComponentId(c);
-			components_.insert(std::pair<ComponentId, std::shared_ptr<Component>>(id, std::shared_ptr<Component>(c)));
+			components_.insert(std::pair<ComponentId, std::shared_ptr<Component>>(id, (c)));
+		}
+
+		bool send(std::shared_ptr<Message> message) {
+			bool handled = false;
+			for(auto& c: components_) {
+				handled |= c.second->receive(message);
+			}
+			return handled;
 		}
 };
 
