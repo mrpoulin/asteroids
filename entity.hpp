@@ -27,16 +27,14 @@ class Entity final {
 		}
 
 		void addComponent(std::shared_ptr<Component> c) {
-			ComponentId id = getComponentId(c);
+			ComponentId id = getComponentId(*c);
 			components_.insert(std::pair<ComponentId, std::shared_ptr<Component>>(id, (c)));
 		}
 
-		bool send(std::shared_ptr<Message> message) {
-			bool handled = false;
+		void send(std::shared_ptr<Message> message) {
 			for(auto& c: components_) {
-				handled |= c.second->receive(message);
+				message->dispatch(c.second.get());
 			}
-			return handled;
 		}
 };
 

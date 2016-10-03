@@ -1,10 +1,9 @@
-BUILDDIR=build
-OBJ=$(addprefix $(BUILDDIR)/, $(patsubst %.cpp, %.o, $(wildcard *.cpp)))
-DEPS=$(OBJ:.o=.d)
-CXXFLAGS += -std=c++14
-BIN=asteroids
+include standard_defs.mk
 
--include $(DEPS)
+vpath %.cpp components systems messages
+
+SRC= $(wildcard *.cpp) $(wildcard */*.cpp)
+OBJ=$(addprefix $(BUILDDIR)/, $(notdir $(patsubst %.cpp, %.o, $(SRC))))
 
 all: $(BUILDDIR) $(BIN)
 
@@ -14,11 +13,12 @@ $(BUILDDIR)/%.o: %.cpp
 $(BIN) : $(OBJ)
 	$(CXX) $(LDFLAGS) -o $@ $^
 
-
 $(BUILDDIR):
 	mkdir $(BUILDDIR)
 
 .PHONY:
 clean:
-	rm $(BIN) $(wildcard *.o) $(wildcard *.d) $(wildcard *.gch)
 	rm -rf $(BUILDDIR)
+	rm $(BIN) $(wildcard *.o) $(wildcard *.d)
+test:
+	echo $(OBJ)
