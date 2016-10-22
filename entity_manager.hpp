@@ -10,9 +10,10 @@
 class EntityManager final {
 	private:
 		std::multimap<ComponentId, std::shared_ptr<Entity>> entitiesForComponent_;
-		static unsigned long nextId_;
+		static EntityId nextId_;
 	public:
 
+		EntityManager() = default;
 		EntityManager(const EntityManager&) = delete;
 		EntityManager& operator=(const EntityManager&) = delete;
 

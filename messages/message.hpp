@@ -4,38 +4,44 @@
 #include <memory>
 #include "vec2d.hpp"
 
-
-class MessageHandlerBase {};
+class MessageHandlerBase {
+public:
+	virtual ~MessageHandlerBase() {}
+};
 
 template <typename T>
 class MessageHandler : public MessageHandlerBase {
 	public:
-		virtual void handle(T&) = 0;
+		virtual bool handle(T&) = 0;
 };
 
 template <typename T>
-void dynamicDispatch(MessageHandlerBase* h, T& message) {
-	static_cast< MessageHandler<T>*>(h)->handle(message);
+bool dynamicDispatch(MessageHandlerBase* h, T& message) {
+	MessageHandler<T>* handler =  dynamic_cast<MessageHandler<T>*>(h);
+
+	if(!handler) return false;
+
+	return handler->handle(message);
 }
 
 class Message {
 	public:
-		virtual void dispatch(MessageHandlerBase*) = 0;
+		virtual bool dispatch(MessageHandlerBase*) = 0;
 };
 
 class GetScreenPositionMessage : public Message {
 	public:
 		Vec2D<float> position;
-		inline virtual void dispatch(MessageHandlerBase* h) {
-			dynamicDispatch(h, *this);
+		inline virtual bool dispatch(MessageHandlerBase* h) override {
+			return dynamicDispatch(h, *this);
 		}
 };
 
 class SetScreenPositionMessage : public Message {
 	public:
 		Vec2D<float> position;
-		inline virtual void dispatch(MessageHandlerBase* h) {
-			dynamicDispatch(h, *this);
+		inline virtual bool dispatch(MessageHandlerBase* h) override {
+			return dynamicDispatch(h, *this);
 		}
 };
 

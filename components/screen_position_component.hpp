@@ -15,8 +15,8 @@ class ScreenPositionComponent : public Component,
 		ScreenPositionComponent(): position_{0, 0} {}
 		ScreenPositionComponent(const Vec2D<float>& startingPosition): position_{startingPosition} {}
 
-		void handle(GetScreenPositionMessage& msg);
-		void handle(SetScreenPositionMessage& msg);
+		bool handle(GetScreenPositionMessage& msg);
+		bool handle(SetScreenPositionMessage& msg);
 
 };
 

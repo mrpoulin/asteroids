@@ -1,6 +1,12 @@
-include standard_defs.mk
+BUILDDIR=build
 
-vpath %.cpp components systems messages
+CXX=g++
+CXXFLAGS=-MMD -Wall -std=c++14 -I"components" -I"systems" -I"messages" -I"input" -I"." -I"/usr/local/include/SDL2"
+LDFLAGS=-L"/usr/local/lib" -lSDL2
+
+BIN=asteroids
+
+vpath %.cpp components systems messages input
 
 SRC= $(wildcard *.cpp) $(wildcard */*.cpp)
 OBJ=$(addprefix $(BUILDDIR)/, $(notdir $(patsubst %.cpp, %.o, $(SRC))))

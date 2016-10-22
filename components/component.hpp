@@ -8,6 +8,8 @@
 typedef std::type_index ComponentId;
 
 class Component : public MessageHandlerBase {
+public:
+	virtual ~Component() {}
 };
 
 template <typename T>

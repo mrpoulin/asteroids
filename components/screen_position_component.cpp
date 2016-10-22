@@ -1,9 +1,11 @@
 #include "screen_position_component.hpp"
 
-void ScreenPositionComponent::handle(GetScreenPositionMessage& msg) {
+bool ScreenPositionComponent::handle(GetScreenPositionMessage& msg) {
 	msg.position = position_;
+	return true;
 }
 
-void ScreenPositionComponent::handle(SetScreenPositionMessage& msg) {
+bool ScreenPositionComponent::handle(SetScreenPositionMessage& msg) {
 	position_ = msg.position;
+	return true;
 }

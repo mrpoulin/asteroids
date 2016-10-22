@@ -6,12 +6,14 @@
 #include <memory>
 #include <unordered_map>
 
+typedef unsigned long EntityId;
+
 class Entity final {
 	private:
-		unsigned long id_;
+		EntityId id_;
 		std::unordered_map<ComponentId, std::shared_ptr<Component>> components_;
 	public:
-		Entity(const unsigned long id): id_{id} {}
+		Entity(const EntityId id): id_{id} {}
 		Entity(const Entity&) = delete;
 		Entity& operator=(const Entity&) = delete;
 

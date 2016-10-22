@@ -4,3 +4,4 @@
 *.out
 asteroids
 build/
+.vscode/
