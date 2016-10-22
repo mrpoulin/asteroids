@@ -1,4 +1,5 @@
 #include "input_system.hpp"
+#include <iostream>
 
 InputSystem::InputSystem(std::shared_ptr<EntityManager> em, std::shared_ptr<Keyboard> kb): 
 	System{em}, keyboard_{kb} {
@@ -20,6 +21,7 @@ void InputSystem::update() {
 	std::list<Action*> actions;
 	keyboard_->each([&](Keyboard::Key k) {
 		if(keyboard_->isKeyPressed(k)) {
+			std::cout << (short)k << " is pressed" << std::endl;
 			for(auto &ctx: contexts_) {
 				Action* a = nullptr;
 				if(ctx->mapToAction(k, &a)) {

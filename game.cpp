@@ -29,9 +29,6 @@ int main() {
 			nullptr);
 	}
 
-	bool running = true;
-	SDL_Event e;
-
 	// Setup game stuff.
 	auto entityManager = std::shared_ptr<EntityManager>(new EntityManager());
 	auto keyboard = std::shared_ptr<Keyboard>(new SDLKeyboard());
@@ -45,7 +42,15 @@ int main() {
 	inputSystem->registerListener(testSystem);
 	inputSystem->registerContext(basicContext);
 
-	// TODO: Yes, fix this.
+	bool running = true;
+	SDL_Event e;
+
+	constexpr double UPDATES_PER_SECOND = 25;
+	constexpr double DELAY_TICKS = 1000 / UPDATES_PER_SECOND;
+	constexpr double MAX_UPDATES = 5;
+
+	double nextUpdateTick = SDL_GetTicks();
+
 	while(running) {
 		while(SDL_PollEvent(&e) != 0) {
 			switch(e.type) {
@@ -55,7 +60,16 @@ int main() {
 			}
 		}
 
-		inputSystem->update();
+		for(auto updates = 0; SDL_GetTicks() > nextUpdateTick && updates < MAX_UPDATES; ++updates) {
+			inputSystem->update();
+			// Other updating stuff.
+
+			nextUpdateTick += DELAY_TICKS;
+		}
+
+		double delta = 1 - (nextUpdateTick - SDL_GetTicks() / (double) DELAY_TICKS);
+		// Rendering system
+		// renderingSystem->render()
 	}
 
 	SDL_DestroyWindow(mainWindow);
