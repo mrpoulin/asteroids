@@ -1,14 +1,11 @@
 #ifndef __SYSTEM_HPP__
 #define __SYSTEM_HPP__
 
-#include "entity_manager.hpp"
+#include "message.hpp"
 
-class System : public MessageHandlerBase {
-	private:
-		std::shared_ptr<EntityManager> entityManager_;
+class SystemInterface : public MessageHandlerBase {
 	public:
-		System(std::shared_ptr<EntityManager> em): entityManager_{em} {}
-		virtual void update() = 0;
+		virtual void update(double delta) = 0;
 		virtual ~System() {};
 };
 

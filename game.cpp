@@ -29,6 +29,9 @@ int main() {
 			nullptr);
 	}
 
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+	SDL_RenderSetLogicalSize(renderer, 1024, 768);
+
 	// Setup game stuff.
 	auto entityManager = std::shared_ptr<EntityManager>(new EntityManager());
 	auto keyboard = std::shared_ptr<Keyboard>(new SDLKeyboard());
@@ -52,23 +55,29 @@ int main() {
 	double nextUpdateTick = SDL_GetTicks();
 
 	while(running) {
-		while(SDL_PollEvent(&e) != 0) {
-			switch(e.type) {
-				case SDL_QUIT:
-					running = false;
-					break;
-			}
-		}
 
 		for(auto updates = 0; SDL_GetTicks() > nextUpdateTick && updates < MAX_UPDATES; ++updates) {
-			inputSystem->update();
+
+			while(SDL_PollEvent(&e) != 0) {
+				switch(e.type) {
+					case SDL_QUIT:
+						running = false;
+						break;
+				}
+			}
+
+			inputSystem->update(0);
 			// Other updating stuff.
 
 			nextUpdateTick += DELAY_TICKS;
 		}
 
 		double delta = 1 - (nextUpdateTick - SDL_GetTicks() / (double) DELAY_TICKS);
-		// Rendering system
+
+		// Rendering set up screen
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderClear(renderer);
+		SDL_RenderPresent(renderer);
 		// renderingSystem->render()
 	}
 

@@ -9,7 +9,7 @@ class TestSystem : public System,
 {
 	public:
 		TestSystem(std::shared_ptr<EntityManager> em): System{em} {}
-		void update() override {}
+		void update(double delta) override {}
 
 		bool handle(NullAction& a) override {
 			std::cout << "got a null action!@!@" << std::endl;

@@ -4,16 +4,17 @@
 #include "component.hpp"
 #include "vec2d.hpp"
 #include "message.hpp"
+#include "game_types.hpp"
 
 class ScreenPositionComponent : public Component, 
-	MessageHandler<GetScreenPositionMessage>,
-	MessageHandler<SetScreenPositionMessage>  
+	public MessageHandler<GetScreenPositionMessage>,
+	public MessageHandler<SetScreenPositionMessage>  
 {
 	private:
-		Vec2D<float> position_;
+		Vec2D<Position> position_;
 	public:
 		ScreenPositionComponent(): position_{0, 0} {}
-		ScreenPositionComponent(const Vec2D<float>& startingPosition): position_{startingPosition} {}
+		ScreenPositionComponent(const Vec2D<Position>& startingPosition): position_{startingPosition} {}
 
 		bool handle(GetScreenPositionMessage& msg);
 		bool handle(SetScreenPositionMessage& msg);

@@ -13,7 +13,7 @@ void InputSystem::registerListener(std::shared_ptr<System> l) {
 	listeners_.push_front(l);
 }
 
-void InputSystem::update() {
+void InputSystem::update(double delta) {
 
 	keyboard_->update();
 

@@ -2,7 +2,7 @@ BUILDDIR=build
 
 CXX=g++
 CXXFLAGS=-MMD -Wall -std=c++14 -I"components" -I"systems" -I"messages" -I"input" -I"." -I"/usr/local/include/SDL2"
-LDFLAGS=-L"/usr/local/lib" -lSDL2
+LDFLAGS=-L"/usr/local/lib" -lSDL2 -lSDL2_image
 
 BIN=asteroids
 

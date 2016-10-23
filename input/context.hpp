@@ -2,7 +2,6 @@
 #define __INPUT_MAPPER_HPP__
 
 #include <unordered_map>
-#include <set>
 #include "action.hpp"
 #include "keyboard.hpp"
 

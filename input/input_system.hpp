@@ -22,7 +22,7 @@ class InputSystem : public System {
 		void registerContext(std::shared_ptr<Context>);
 		void registerListener(std::shared_ptr<System>);
 
-		void update() override;
+		void update(double delta) override;
 };
 
 

@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "vec2d.hpp"
+#include "game_types.hpp"
 
 class MessageHandlerBase {
 public:
@@ -31,7 +32,7 @@ class Message {
 
 class GetScreenPositionMessage : public Message {
 	public:
-		Vec2D<float> position;
+		Vec2D<Position> position;
 		inline virtual bool dispatch(MessageHandlerBase* h) override {
 			return dynamicDispatch(h, *this);
 		}
@@ -39,7 +40,7 @@ class GetScreenPositionMessage : public Message {
 
 class SetScreenPositionMessage : public Message {
 	public:
-		Vec2D<float> position;
+		Vec2D<Position> position;
 		inline virtual bool dispatch(MessageHandlerBase* h) override {
 			return dynamicDispatch(h, *this);
 		}
