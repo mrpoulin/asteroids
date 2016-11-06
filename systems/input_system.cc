@@ -1,9 +1,7 @@
-#include "input_system.hpp"
+#include "input_system.h"
 #include <iostream>
 
-InputSystem::InputSystem(std::shared_ptr<EntityManager> em, std::shared_ptr<Keyboard> kb): 
-	System{em}, keyboard_{kb} {
-}
+InputSystem::InputSystem(std::shared_ptr<Keyboard> kb): keyboard_{kb} {}
 
 void InputSystem::registerContext(std::shared_ptr<Context> c) {
 	contexts_.push_front(c);

@@ -1,9 +1,13 @@
 #include <iostream>
 #include <SDL.h>
 #include <memory>
-#include "input_system.hpp"
-#include "action.hpp"
-#include "test_system.hpp"
+#include "input_system.h"
+#include "rendering_system.h"
+#include "action.h"
+#include "test_system.h"
+#include "texture_manager.h"
+#include "screen_position_component.h"
+#include "sprite_component.h"
 
 int main() {
 
@@ -36,14 +40,26 @@ int main() {
 	auto entityManager = std::shared_ptr<EntityManager>(new EntityManager());
 	auto keyboard = std::shared_ptr<Keyboard>(new SDLKeyboard());
 
-	auto inputSystem = std::shared_ptr<InputSystem>(new InputSystem(entityManager, keyboard));
-	auto testSystem = std::shared_ptr<TestSystem>(new TestSystem(entityManager));
+	auto inputSystem = std::shared_ptr<InputSystem>(new InputSystem(keyboard));
+	auto testSystem = std::shared_ptr<TestSystem>(new TestSystem());
+	auto renderingSystem = std::shared_ptr<RenderingSystem>(new RenderingSystem(entityManager, renderer));
 
 	auto basicContext = std::shared_ptr<Context>(new Context());
 	basicContext->addAction(Keyboard::Key::A, new NullAction());
 
 	inputSystem->registerListener(testSystem);
 	inputSystem->registerContext(basicContext);
+
+	// Textures
+	TextureManager textureManager;
+	auto shipTexture = textureManager.loadTexture(renderer, "../assets/sprites/ship.png");
+
+	auto screenPosComp = std::shared_ptr<ScreenPositionComponent>(new ScreenPositionComponent());
+	auto spriteComp = std::shared_ptr<SpriteComponent>(new SpriteComponent(shipTexture, 92, 92, 0, 0));
+	Entity::Ptr ship = entityManager->createEntity();
+
+	entityManager->addComponentTo(ship, screenPosComp);
+	entityManager->addComponentTo(ship, spriteComp);
 
 	bool running = true;
 	SDL_Event e;
@@ -75,10 +91,10 @@ int main() {
 		double delta = 1 - (nextUpdateTick - SDL_GetTicks() / (double) DELAY_TICKS);
 
 		// Rendering set up screen
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		//SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
+		renderingSystem->update(delta);
 		SDL_RenderPresent(renderer);
-		// renderingSystem->render()
 	}
 
 	SDL_DestroyWindow(mainWindow);

@@ -1,4 +1,4 @@
-#include "screen_position_component.hpp"
+#include "screen_position_component.h"
 
 bool ScreenPositionComponent::handle(GetScreenPositionMessage& msg) {
 	msg.position = position_;

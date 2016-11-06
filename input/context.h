@@ -2,8 +2,8 @@
 #define __INPUT_MAPPER_HPP__
 
 #include <unordered_map>
-#include "action.hpp"
-#include "keyboard.hpp"
+#include "action.h"
+#include "keyboard.h"
 
 class Context {
 	private:

@@ -1,4 +1,4 @@
-#include "bounding_box_component.hpp"
+#include "bounding_box_component.h"
 
 BoundingBoxComponent::BoundingBoxComponent(Position x, Position y, Dimension w, Dimension h):
     upperLeftHand_{x, y}, width_{w}, height_{h}

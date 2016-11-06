@@ -2,16 +2,18 @@
 #define SYSTEM_RENDERING_SYSTEM_H_
 
 #include <memory>
-#include "system.hpp"
-#include "entity_manager.hpp"
+#include "system.h"
+#include "entity_manager.h"
+#include <SDL.h>
 
-class RenderingSystem : public SystemInterface {
+class RenderingSystem : public System{
   public:
-    RenderingSystem(std::shared_ptr<EntityManager> em);
+    RenderingSystem(EntityManager::Ptr em, SDL_Renderer*);
 
     virtual void update(double delta) override;
   private:
-    std::shared_ptr<EntityManager> entity_manager_;
-}
+    EntityManager::Ptr entityManager_;
+    SDL_Renderer* renderer_;
+};
 
 #endif

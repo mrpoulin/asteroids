@@ -1,7 +1,7 @@
 #ifndef __PHYSICS_HPP__
 #define __PHYSICS_HPP__
 
-#include "vec2d.hpp"
+#include "vec2d.h"
 #include <cmath>
 
 template <typename T>

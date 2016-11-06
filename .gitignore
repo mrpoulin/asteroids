@@ -5,3 +5,4 @@
 asteroids
 build/
 .vscode/
+.DS_Store

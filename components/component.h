@@ -1,7 +1,7 @@
 #ifndef __COMPONENT_HPP__
 #define __COMPONENT_HPP__
 
-#include "message.hpp"
+#include "message.h"
 #include <typeindex>
 #include <memory>
 

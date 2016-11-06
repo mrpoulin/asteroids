@@ -1,4 +1,7 @@
-#include "texture.hpp"
+#include "texture.h"
+#include <iostream>
+
+using namespace std;
 
  Texture::Texture(SDL_Texture* tex):
     texture_{tex}

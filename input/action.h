@@ -1,7 +1,7 @@
 #ifndef __ACTION_HPP__
 #define __ACTION_HPP__
 
-#include "message.hpp"
+#include "message.h"
 
 class Action : public Message {
 };

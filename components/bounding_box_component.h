@@ -1,10 +1,10 @@
 #ifndef __BOUNDING_BOX_COMPONENT_HPP__
 #define __BOUNDING_BOX_COMPONENT_HPP__
 
-#include "component.hpp"
-#include "message.hpp"
-#include "vec2d.hpp"
-#include "game_types.hpp"
+#include "component.h"
+#include "message.h"
+#include "vec2d.h"
+#include "game_types.h"
 
 class BoundingBoxComponent : public Component,
                              public MessageHandler<SetScreenPositionMessage> 

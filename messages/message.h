@@ -2,8 +2,8 @@
 #define __MESSAGE_HPP__
 
 #include <memory>
-#include "vec2d.hpp"
-#include "game_types.hpp"
+#include "vec2d.h"
+#include "game_types.h"
 
 class MessageHandlerBase {
 public:

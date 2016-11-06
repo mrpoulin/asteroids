@@ -1,4 +1,4 @@
-#include "texture_manager.hpp"
+#include "texture_manager.h"
 #include <SDL_image.h>
 
 Texture::Ptr TextureManager::loadTexture(SDL_Renderer* renderer, const std::string path) {
@@ -22,9 +22,27 @@ Texture::Ptr TextureManager::loadTexture(SDL_Renderer* renderer, const std::stri
 
     SDL_FreeSurface(surface);
 
-    Texture::Ptr managedTex = std::make_shared<Texture>(Texture(sdlTex));
+    Texture::Ptr managedTex = Texture::Ptr(new Texture(sdlTex));
 
     textureCache_[path] = managedTex;
 
     return managedTex;
+}
+
+SDL_Texture* TextureManager::leLoad(SDL_Renderer* renderer, const std::string path) {
+
+    SDL_Surface* surface = IMG_Load(path.c_str());
+
+    if(!surface) {
+        return nullptr;
+    }
+
+    SDL_Texture* sdlTex = SDL_CreateTextureFromSurface(renderer, surface); 
+
+    if(!sdlTex) {
+        return nullptr;
+    }
+
+    SDL_FreeSurface(surface);
+    return sdlTex;
 }

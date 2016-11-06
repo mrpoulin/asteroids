@@ -1,8 +1,8 @@
 #ifndef __ENTITY_HPP__
 #define __ENTITY_HPP__
 
-#include "component.hpp"
-#include "message.hpp"
+#include "component.h"
+#include "message.h"
 #include <memory>
 #include <unordered_map>
 
@@ -38,6 +38,8 @@ class Entity final {
 				message->dispatch(c.second.get());
 			}
 		}
+
+		typedef std::shared_ptr<Entity> Ptr;
 };
 
 
