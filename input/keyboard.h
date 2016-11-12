@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <list>
 #include <functional>
+#include <memory>
 
 class Keyboard {
 public:
@@ -24,6 +25,8 @@ public:
 	virtual bool update() = 0;
 
 	virtual void each(std::function<void(Keyboard::Key)>) = 0;
+
+	typedef std::shared_ptr<Keyboard> Ptr;
 };
 
 class SDLKeyboard : public Keyboard {

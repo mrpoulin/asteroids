@@ -8,7 +8,6 @@
 
 class Texture : public RenderableInterface
 {
-
   public:
     SDL_Texture *texture_;
     Texture(SDL_Texture*);

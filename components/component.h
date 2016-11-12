@@ -10,6 +10,8 @@ typedef std::type_index ComponentId;
 class Component : public MessageHandlerBase {
 public:
 	virtual ~Component() {}
+
+	typedef std::shared_ptr<Component> Ptr;
 };
 
 template <typename T>

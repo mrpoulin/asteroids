@@ -23,6 +23,8 @@ class Context {
 				return true;
 			}
 		}
+
+		typedef std::shared_ptr<Context> Ptr;
 };
 
 #endif
