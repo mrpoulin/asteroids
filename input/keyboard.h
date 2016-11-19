@@ -20,8 +20,10 @@ public:
 		LAST = FORWARDSLASH,
 	};
 
-	virtual bool isKeyHeld(const Keyboard::Key) = 0;
-	virtual bool isKeyPressed(const Keyboard::Key) = 0;
+	virtual bool releasedThisFrame(const Keyboard::Key) = 0;
+	virtual bool pressedThisFrame(const Keyboard::Key) = 0;
+	virtual bool pressedLastFrame(const Keyboard::Key) = 0;
+	virtual bool pressed(const Keyboard::Key) = 0;
 	virtual bool update() = 0;
 
 	virtual void each(std::function<void(Keyboard::Key)>) = 0;
@@ -33,8 +35,8 @@ class SDLKeyboard : public Keyboard {
 private:
 	static constexpr uint32_t NUM_SCANCODES = SDL_NUM_SCANCODES;
 
-	const uint8_t* current_keystate_ = nullptr;
-	uint8_t old_keystate_[NUM_SCANCODES] = {false};
+	Uint8 current_keystate_[NUM_SCANCODES] = {0};
+	Uint8 old_keystate_[NUM_SCANCODES] = {0};
 
 	std::list<Keyboard::Key> keyList_;
 
@@ -43,14 +45,16 @@ public:
 	SDLKeyboard();
 
 	bool update() override;
-	bool isKeyHeld(const Keyboard::Key) override;
-	bool isKeyPressed(const Keyboard::Key) override;
+
+	bool releasedThisFrame(const Keyboard::Key) override;
+	bool pressedThisFrame(const Keyboard::Key) override;
+	bool pressedLastFrame(const Keyboard::Key) override;
+	bool pressed(const Keyboard::Key) override;
 
 	void each(std::function<void(Keyboard::Key)> functor) override {
 		for(auto &key: keyList_) {
 			functor(key);
 		}
 	}
-
 };
 #endif

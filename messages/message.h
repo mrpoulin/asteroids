@@ -32,7 +32,7 @@ class Message {
 
 class GetScreenPositionMessage : public Message {
 	public:
-		Vec2D<Position> position;
+		Vec2D<float> position;
 		inline virtual bool dispatch(MessageHandlerBase* h) override {
 			return dynamicDispatch(h, *this);
 		}
@@ -40,7 +40,7 @@ class GetScreenPositionMessage : public Message {
 
 class SetScreenPositionMessage : public Message {
 	public:
-		Vec2D<Position> position;
+		Vec2D<float> position;
 		inline virtual bool dispatch(MessageHandlerBase* h) override {
 			return dynamicDispatch(h, *this);
 		}

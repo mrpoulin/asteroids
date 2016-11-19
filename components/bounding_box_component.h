@@ -11,11 +11,11 @@ class BoundingBoxComponent : public Component,
 
 {
     private:
-        Vec2D<Position> upperLeftHand_;
-        Dimension width_, height_;
+        Vec2D<float> upperLeftHand_;
+        float width_, height_;
     public:
-        BoundingBoxComponent(Position x, Position y, Dimension w, Dimension h);
-        BoundingBoxComponent(Vec2D<Position>& pos, Dimension w, Dimension h);
+        BoundingBoxComponent(float x, float y, float w, float h);
+        BoundingBoxComponent(Vec2D<float>& pos, float w, float h);
 
         bool handle(SetScreenPositionMessage& msg);
 };

@@ -37,9 +37,9 @@ void Engine::teardownSDL() {
 	SDL_Quit();
 }
 
-Engine::Engine(): entityManager_(EntityManager::Ptr(new EntityManager())),
-				  keyboard_(Keyboard::Ptr(new SDLKeyboard())),
-				  inputSystem_(std::shared_ptr<InputSystem>(new InputSystem(keyboard_)))
+Engine::Engine(EntityManager::Ptr em): entityManager_(em),
+									   keyboard_(Keyboard::Ptr(new SDLKeyboard())),
+									   inputSystem_(std::shared_ptr<InputSystem>(new InputSystem(keyboard_)))
 
 {
     initSDL();
@@ -71,33 +71,45 @@ void Engine::run() {
     bool running = true;
 	SDL_Event e;
 
-    double nextUpdateTick = SDL_GetTicks();
+	const float dt = 1;
+	float accumulator = 0;
+
+	float currentTime = SDL_GetTicks();
 
 	while(running) {
 
-		for(auto updates = 0; SDL_GetTicks() > nextUpdateTick && updates < MAX_UPDATES; ++updates) {
-
-			while(SDL_PollEvent(&e) != 0) {
-				switch(e.type) {
-					case SDL_QUIT:
-						running = false;
-						break;
-				}
+		while(SDL_PollEvent(&e) != 0) {
+			switch(e.type) {
+				case SDL_QUIT:
+					running = false;
+					break;
 			}
+		}
+		inputSystem_->update(0);
 
-			inputSystem_->update(0);
+		const auto newTime = SDL_GetTicks();
+		float frameTime = newTime - currentTime;
+
+		if (frameTime > 0.25)
+			frameTime = 0.25;
+		
+		currentTime = newTime;
+		accumulator += frameTime;
+
+
+		while(accumulator >= dt) {
 			for(auto &system : systems_) {
-				system->update(0);
+				system->update(dt);
 			}
-			nextUpdateTick += DELAY_TICKS;
+
+			accumulator -= dt;
 		}
 
-		double delta = 1 - (nextUpdateTick - SDL_GetTicks() / (double) DELAY_TICKS);
+		const double alpha = accumulator / dt;
 
 		// Rendering set up screen
-		//SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(sdlRenderer_);
-		renderingSystem_->update(delta);
+		renderingSystem_->update(alpha);
 		SDL_RenderPresent(sdlRenderer_);
 	}
 }

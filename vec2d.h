@@ -23,13 +23,13 @@ class Vec2D {
 			throw std::out_of_range("Vec2D index must be 0 or 1.");
 	}
 
-	inline Vec2D operator/=(const T& t) const {
+	inline Vec2D operator/=(const T& t) {
 		x /= t;
 		y /= t;
 		return *this;
 	}
 	
-	inline Vec2D operator*=(const T& t) const {
+	inline Vec2D operator*=(const T& t)  {
 		x *= t;
 		y *= t;
 		return *this;
@@ -45,6 +45,10 @@ class Vec2D {
 		x -= o.x;
 		y -= o.y;
 		return *this;
+	}
+
+	Vec2D operator -() {
+		return {-x, -y};
 	}
 	
 

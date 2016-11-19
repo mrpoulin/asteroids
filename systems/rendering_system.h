@@ -6,7 +6,7 @@
 #include "entity_manager.h"
 #include <SDL.h>
 
-class RenderingSystem : public System{
+class RenderingSystem : public System {
   public:
     RenderingSystem(EntityManager::Ptr em, SDL_Renderer*);
 

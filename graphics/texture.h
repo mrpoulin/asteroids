@@ -15,7 +15,8 @@ class Texture : public RenderableInterface
     Dimension width() const;
     Dimension height() const;
 
-    bool render(SDL_Renderer*, const SDL_Rect& src, const SDL_Rect& dest) override;
+    bool render(SDL_Renderer*, const SDL_Rect& src, const SDL_Rect& des,
+                const float angle, const Vec2D<float> center, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
     virtual ~Texture();
 
     typedef std::shared_ptr<Texture> Ptr;

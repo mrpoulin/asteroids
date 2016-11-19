@@ -44,7 +44,7 @@ private:
 
 public:
 
-    Engine();
+    Engine(EntityManager::Ptr em);
 
     // Entity/Component Stuff
 

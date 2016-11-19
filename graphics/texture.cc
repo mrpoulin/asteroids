@@ -8,8 +8,16 @@ using namespace std;
 {
 }
 
-bool Texture::render(SDL_Renderer* renderer, const SDL_Rect& src, const SDL_Rect& dest) {
-    SDL_RenderCopy(renderer, texture_, &src, &dest);
+bool Texture::render(SDL_Renderer* renderer, const SDL_Rect& src, const SDL_Rect& dest,
+                     const float angle, const Vec2D<float> center, SDL_RendererFlip flip) {
+
+    SDL_Point point = {(int)center.x, (int)center.y};
+
+    if(SDL_RenderCopyEx(renderer, texture_, &src, &dest, angle, &point, flip) < 0) {
+        return false;
+    }
+
+    return true;
 }
 
 Texture::~Texture() {
