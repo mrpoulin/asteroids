@@ -5,3 +5,7 @@ This project makes use of the [entity/component design pattern](http://entity-sy
 to make the game's implementation as data driven and reusable as possible.
 
 Assets not included.
+
+## Current Progress
+
+![readme-gif](https://cloud.githubusercontent.com/assets/4431638/20549978/0d5d8ff4-b0ff-11e6-9da6-10eb83b59dcd.gif)
