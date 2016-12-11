@@ -2,8 +2,7 @@
 #define __MOVEMENT_SYSTEM_H__
 
 #include "system.h"
-#include "entity_manager.h"
-#include "action.h"
+#include "entity/entity_manager.h"
 
 class MovementSystem: public System {
 public:

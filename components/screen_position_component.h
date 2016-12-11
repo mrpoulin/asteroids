@@ -1,24 +1,34 @@
-#ifndef __SCREEN_POSITION_COMPONENT_HPP__
-#define __SCREEN_POSITION_COMPONENT_HPP__
+/////////////////////////////////////////////////////////////////////////////////////////
+// Stores the position of an entity on the screen in screen coordiantes.
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef COMPONENT_SCREEN_POSITION_COMPONENT_H
+#define COMPONENT_SCREEN_POSITION_COMPONENT_H
 
 #include "component.h"
-#include "vec2d.h"
-#include "message.h"
-#include "game_types.h"
+#include "common/vec2d.h"
+#include "messages/message.h"
+#include "common/game_types.h"
+
+namespace asteroids {
+namespace component {
 
 class ScreenPositionComponent : public Component, 
-	public MessageHandler<GetScreenPositionMessage>,
-	public MessageHandler<SetScreenPositionMessage>  
+	public message::MessageHandler<GetScreenPositionMessage>,
+	public message::MessageHandler<SetScreenPositionMessage>  
 {
 	public:
-		Vec2D<float> position;
+		common::Vec2D<ScreenPosition> position;
 		
 		ScreenPositionComponent() = default;
-		ScreenPositionComponent(const Vec2D<float>& startingPosition): position{startingPosition} {}
+		ScreenPositionComponent(const common::Vec2D<ScreenPosition>& startingPosition): position{startingPosition} {}
 
-		bool handle(GetScreenPositionMessage& msg);
-		bool handle(SetScreenPositionMessage& msg);
+		bool handle(message::GetScreenPositionMessage& msg);
+		bool handle(message::SetScreenPositionMessage& msg);
 };
 
+} // asteroids
+} // component
 
-#endif
+
+#endif // COMPONENT_SCREEN_POSITION_COMPONENT_H

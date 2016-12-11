@@ -1,25 +1,35 @@
-#ifndef __TEXTURE_HPP__
-#define __TEXTURE_HPP__
+/////////////////////////////////////////////////////////////////////////////////////////
+// Wraps an SDL texture object. 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef GRAPHICS_TEXTURE_H
+#define GRAPHICS_TEXTURE_H
 
 #include <SDL.h>
 #include <string>
 #include "renderable.h"
-#include "game_types.h"
+#include "common/game_types.h"
+
+namespace asteroids {
+namespace graphics {
 
 class Texture : public RenderableInterface
 {
-  public:
-    SDL_Texture *texture_;
-    Texture(SDL_Texture*);
+public:
+  SDL_Texture *texture_;
+  Texture(SDL_Texture*);
 
-    Dimension width() const;
-    Dimension height() const;
+  // Dimension width() const;
+  // Dimension height() const;
 
-    bool render(SDL_Renderer*, const SDL_Rect& src, const SDL_Rect& des,
-                const float angle, const Vec2D<float> center, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
-    virtual ~Texture();
+  bool render(SDL_Renderer*, const SDL_Rect& src, const SDL_Rect& des,
+              const float angle, const common::Vec2D<ScreenPosition> center, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
+  virtual ~Texture();
 
-    typedef std::shared_ptr<Texture> Ptr;
+  typedef std::shared_ptr<Texture> Ptr;
 };
 
-#endif
+} // graphics
+} // asteroids
+
+#endif // GRAPHICS_TEXTURE_H

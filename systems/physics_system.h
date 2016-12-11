@@ -2,8 +2,8 @@
 #define __PHYSICS_SYSTEM_H__
 
 #include "system.h"
-#include "entity_manager.h"
-#include "action.h"
+#include "entity/entity_manager.h"
+#include "input/action.h"
 
 class PhysicsSystem: public System,
                      public MessageHandler<AccelerateState>,

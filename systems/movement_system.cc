@@ -1,7 +1,7 @@
 #include <list>
 #include "movement_system.h"
-#include "screen_position_component.h"
-#include "physics_component.h"
+#include "components/screen_position_component.h"
+#include "components/physics_component.h"
 
 void MovementSystem::update(double delta) {
     std::list<Entity> screenPositionEntities;

@@ -2,7 +2,7 @@
 #define __SYSTEM_HPP__
 
 #include <memory>
-#include "message.h"
+#include "messages/message.h"
 
 class System : public MessageHandlerBase {
 	public:

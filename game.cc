@@ -1,13 +1,13 @@
 #include <iostream>
 #include <memory>
-#include "engine.h"
-#include "rendering_system.h"
-#include "action.h"
-#include "movement_system.h"
-#include "screen_position_component.h"
-#include "sprite_component.h"
-#include "physics_component.h"
-#include "physics_system.h"
+#include "engine/engine.h"
+#include "systems/rendering_system.h"
+#include "input/action.h"
+#include "systems/movement_system.h"
+#include "components/screen_position_component.h"
+#include "components/sprite_component.h"
+#include "components/physics_component.h"
+#include "systems/physics_system.h"
 
 int main() {
 
@@ -24,16 +24,19 @@ int main() {
 	// Create Ship.
 	auto shipTexture = engine.getTexture("../assets/sprites/ship.png");
 	auto screenPosComp = std::shared_ptr<ScreenPositionComponent>(new ScreenPositionComponent());
-	auto spriteComp = std::shared_ptr<SpriteComponent>(new SpriteComponent(shipTexture, 84, 87, 289, 0));
-	auto physicsComp = std::shared_ptr<PhysicsComponent>(new PhysicsComponent(3, 5, 1));
+
+	auto spriteComp = std::shared_ptr<AnimatedSpriteComponent>(new AnimatedSpriteComponent(shipTexture, "stationary"));
+	spriteComp->addFrameTo("stationary", {51, 52, 0, 0});
+
+	auto physicsComp = std::shared_ptr<PhysicsComponent>(new PhysicsComponent(1.3, 3, 1));
 	auto shipEntity = engine.createEntity({screenPosComp, spriteComp, physicsComp});
 
 	// Setup input.
 	auto firstPlayerContext = std::shared_ptr<Context>(new Context());
-	firstPlayerContext->addState(Keyboard::Key::W, new AccelerateState(shipEntity, 1.5));
-	firstPlayerContext->addState(Keyboard::Key::S, new AccelerateState(shipEntity, -1.5));
-	firstPlayerContext->addState(Keyboard::Key::A, new RotateState(shipEntity, -0.45));
-	firstPlayerContext->addState(Keyboard::Key::D, new RotateState(shipEntity, 0.45));
+	firstPlayerContext->addState(Keyboard::Key::W, new AccelerateState(shipEntity, 1.1));
+	firstPlayerContext->addState(Keyboard::Key::S, new AccelerateState(shipEntity, -1.1));
+	firstPlayerContext->addState(Keyboard::Key::A, new RotateState(shipEntity, -0.3));
+	firstPlayerContext->addState(Keyboard::Key::D, new RotateState(shipEntity, 0.3));
 
 	engine.addContext(firstPlayerContext);
 

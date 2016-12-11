@@ -1,9 +1,8 @@
 #include <list>
 #include <cmath>
 #include "physics_system.h"
-#include "physics_component.h"
-#include "screen_position_component.h"
-#include <iostream>
+#include "components/physics_component.h"
+#include "components/screen_position_component.h"
 
 void PhysicsSystem::update(double delta) {
     std::list<Entity> physicsEntities;

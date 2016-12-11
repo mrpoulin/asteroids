@@ -1,6 +1,9 @@
 #include "engine.h"
 #include <iostream>
 
+namespace asteroids {
+namespace engine {
+
 void Engine::initSDL() {
 
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -37,17 +40,17 @@ void Engine::teardownSDL() {
 	SDL_Quit();
 }
 
-Engine::Engine(EntityManager::Ptr em): entityManager_(em),
-									   keyboard_(Keyboard::Ptr(new SDLKeyboard())),
-									   inputSystem_(std::shared_ptr<InputSystem>(new InputSystem(keyboard_)))
+Engine::Engine(entity::EntityManager::Ptr em): entityManager_(em),
+									   		   keyboard_(Keyboard::Ptr(new SDLKeyboard())),
+									   		   inputSystem_(std::shared_ptr<InputSystem>(new InputSystem(keyboard_)))
 
 {
     initSDL();
 	renderingSystem_ = std::shared_ptr<RenderingSystem>(new RenderingSystem(entityManager_, sdlRenderer_));
 }
 
-Entity Engine::createEntity(const std::list<const Component::Ptr> components) {
-	Entity e = entityManager_->createEntity();
+Entity Engine::createEntity(const std::list<const component::Component::Ptr> components) {
+	entity::Entity e = entityManager_->createEntity();
 	for(auto &component : components) {
 		entityManager_->addComponentTo(e, component);
 	}
@@ -109,7 +112,11 @@ void Engine::run() {
 
 		// Rendering set up screen
 		SDL_RenderClear(sdlRenderer_);
+		// Alpha is the interpolation value.
 		renderingSystem_->update(alpha);
 		SDL_RenderPresent(sdlRenderer_);
 	}
 }
+
+} // engine
+} // asteroids

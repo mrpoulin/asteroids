@@ -1,10 +1,19 @@
-#ifndef __INTERPOLATING_COMPONENT_H__
-#define __INTERPOLATING_COMPONENT_H__
+/////////////////////////////////////////////////////////////////////////////////////////
+// Interpolation component does nothing right now.
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef COMPONENTS_INTERPOLATING_COMPONENT_H
+#define COMPONENTS_INTERPOLATING_COMPONENT_H
 
 #include "component.h"
 
-class InterpolatingComponent : public Component {
-    
-}
+namespace asteroids {
+namespace component {
 
-#endif
+class InterpolatingComponent : public Component {
+};
+
+} // component
+} // asteroids
+
+#endif //COMPONENTS_INTERPOLATING_COMPONENT_H

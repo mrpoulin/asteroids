@@ -1,5 +1,10 @@
-#ifndef __TEXTURE_MANAGER_HPP__
-#define __TEXTURE_MANAGER_HPP__
+/////////////////////////////////////////////////////////////////////////////////////////
+// Loads and manages textures.
+// Textures are loaded from files and cached to prevent re-loading.
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef GRAPHICS_TEXTURE_MANAGER_H
+#define GRAPHICS_TEXTURE_MANAGER_H
 
 #include <memory>
 #include <string>
@@ -7,16 +12,21 @@
 #include <unordered_map>
 #include "texture.h"
 
-class TextureManager {
-    private:
-        std::unordered_map<std::string, Texture::Ptr> textureCache_;
-    public:
-        TextureManager() = default;
-        TextureManager(const TextureManager&) = delete;
-        TextureManager& operator=(const TextureManager&) = delete;
+namespace asteroids {
+namespace graphics {
 
-        Texture::Ptr loadTexture(SDL_Renderer*, const std::string);
-        SDL_Texture* leLoad(SDL_Renderer* renderer, const std::string path);
+class TextureManager {
+public:
+    TextureManager() = default;
+    TextureManager(const TextureManager&) = delete;
+    TextureManager& operator=(const TextureManager&) = delete;
+
+    Texture::Ptr loadTexture(SDL_Renderer*, const std::string);
+private:
+    std::unordered_map<std::string, Texture::Ptr> textureCache_;
 };
 
-#endif
+} // graphics
+} // asteroids
+
+#endif // GRAPHICS_TEXTURE_MANAGER_HPP__

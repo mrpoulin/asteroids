@@ -1,23 +1,33 @@
-#ifndef __BOUNDING_BOX_COMPONENT_HPP__
-#define __BOUNDING_BOX_COMPONENT_HPP__
+/////////////////////////////////////////////////////////////////////////////////////////
+//   Bounding box component for collision detection.
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef COMPONENTS_BOUNDING_BOX_COMPONENT_H
+#define COMPONENTS_BOUNDING_BOX_COMPONENT_H
 
 #include "component.h"
-#include "message.h"
-#include "vec2d.h"
-#include "game_types.h"
+#include "messages/message.h"
+#include "common/vec2d.h"
+#include "common/game_types.h"
+
+namespace asteroids {
+namespace component {
 
 class BoundingBoxComponent : public Component,
-                             public MessageHandler<SetScreenPositionMessage> 
-
+                             public message::MessageHandler<SetScreenPositionMessage> 
 {
-    private:
-        Vec2D<float> upperLeftHand_;
-        float width_, height_;
-    public:
-        BoundingBoxComponent(float x, float y, float w, float h);
-        BoundingBoxComponent(Vec2D<float>& pos, float w, float h);
+public:
+    BoundingBoxComponent(float x, float y, float w, float h);
+    BoundingBoxComponent(Vec2D<float>& pos, float w, float h);
 
-        bool handle(SetScreenPositionMessage& msg);
+    bool handle(message::SetScreenPositionMessage& msg);
+
+private:
+    common::Vec2D<float> upperLeftHand_;
+    float width_, height_;
 };
 
-#endif
+} // component
+} // asteroids
+
+#endif // COMPONENTS_BOUNDING_BOX_COMPONENT_H

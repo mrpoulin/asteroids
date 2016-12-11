@@ -1,6 +1,9 @@
 #include "texture_manager.h"
 #include <SDL_image.h>
 
+namespace asteroids {
+namespace graphics {
+
 Texture::Ptr TextureManager::loadTexture(SDL_Renderer* renderer, const std::string path) {
 
     auto it = textureCache_.find(path);
@@ -29,20 +32,5 @@ Texture::Ptr TextureManager::loadTexture(SDL_Renderer* renderer, const std::stri
     return managedTex;
 }
 
-SDL_Texture* TextureManager::leLoad(SDL_Renderer* renderer, const std::string path) {
-
-    SDL_Surface* surface = IMG_Load(path.c_str());
-
-    if(!surface) {
-        return nullptr;
-    }
-
-    SDL_Texture* sdlTex = SDL_CreateTextureFromSurface(renderer, surface); 
-
-    if(!sdlTex) {
-        return nullptr;
-    }
-
-    SDL_FreeSurface(surface);
-    return sdlTex;
-}
+} // graphics
+} // asteroids

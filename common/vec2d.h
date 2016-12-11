@@ -1,9 +1,16 @@
-#ifndef __VEC2D__H__
-#define __VEC2D__H__
+/////////////////////////////////////////////////////////////////////////////////////////
+// 2D Vector Library
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef COMMON_VEC2D_H
+#define COMMON_VEC2D_H
 
 #include <stdexcept>
 #include <cmath>
 #include <tuple>
+
+namespace asteroids {
+namespace common {
 
 template <typename T>
 class Vec2D {
@@ -14,7 +21,7 @@ class Vec2D {
 	Vec2D(): x{0}, y{0} {}
 	Vec2D(const T& x, const T& y): x{x}, y{y} {}
 
-	inline T& operator[](int idx) const {
+	inline const T& operator[](int idx) const {
 		if (idx == 0)
 			return x;
 		else if (idx == 1)
@@ -23,40 +30,41 @@ class Vec2D {
 			throw std::out_of_range("Vec2D index must be 0 or 1.");
 	}
 
-	inline Vec2D operator/=(const T& t) {
+	inline Vec2D& operator/=(const T& t) {
 		x /= t;
 		y /= t;
 		return *this;
 	}
 	
-	inline Vec2D operator*=(const T& t)  {
+	inline Vec2D& operator*=(const T& t)  {
 		x *= t;
 		y *= t;
 		return *this;
 	}
 
-	Vec2D& operator+=(const Vec2D& o) {
+	inline Vec2D& operator+=(const Vec2D& o) {
 		x += o.x;
 		y += o.y;
 		return *this;
 	}
 	
-	Vec2D& operator-=(const Vec2D& o) {
+	inline Vec2D& operator-=(const Vec2D& o) {
 		x -= o.x;
 		y -= o.y;
 		return *this;
 	}
 
-	Vec2D operator -() {
+	// Return a new vector with it's x and y component negated.
+	inline Vec2D operator -() const {
 		return {-x, -y};
 	}
 	
 
-	inline friend bool operator==(const Vec2D& lhs, const Vec2D& rhs) {
+	inline friend bool operator==(const Vec2D& lhs, const Vec2D& rhs) const {
 		return std::tie(lhs.x, lhs.y) == std::tie(rhs.x, rhs.y);
 	}
 
-	inline friend bool operator!=(const Vec2D& lhs, const Vec2D& rhs) {
+	inline friend bool operator!=(const Vec2D& lhs, const Vec2D& rhs) const {
 		return !(lhs == rhs);
 	}
 };
@@ -106,4 +114,7 @@ inline T rotation(const Vec2D<T>& v) {
 	return std::atan(v.y / v.x);
 }
 
-#endif
+} // common
+} // asteroids
+
+#endif // COMMON_VEC2D_H

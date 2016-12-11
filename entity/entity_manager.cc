@@ -1,7 +1,14 @@
 #include "entity_manager.h"
 
+namespace asteroids {
+namespace entity {
+
+using component;
+
 Entity EntityManager::nextEntity_ = 0;
 
+// We only allocate new entities if the freeEntities_ list
+// is empty to allow entity reuse.
 Entity EntityManager::getNextEntity() {
     if(!freeEnities_.empty()) {
         Entity next = freeEnities_.front();
@@ -36,3 +43,6 @@ void EntityManager::addComponentTo(const Entity& e, Component::Ptr c) {
         entitiesForComponent_[componentId] = {{e, c}};
     }
 }
+
+} // entity
+} // asteroids

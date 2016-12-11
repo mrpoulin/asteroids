@@ -1,14 +1,14 @@
 #ifndef __INPUT_MANAGER_HPP__
 #define __INPUT_MANAGER_HPP__
 
-#include "context.h"
-#include "system.h"
-#include "action.h"
-#include "keyboard.h"
-#include "entity_manager.h"
 #include <memory>
 #include <SDL.h>
 #include <list>
+#include "input/context.h"
+#include "system.h"
+#include "input/action.h"
+#include "input/keyboard.h"
+#include "entity/entity_manager.h"
 
 class InputSystem : public System {
 	private:
