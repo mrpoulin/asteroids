@@ -7,6 +7,8 @@
 #define COMPONENT_PHYSICS_COMPONENT_H
 
 #include "component.h"
+#include "common/rotation2d.h"
+#include "common/game_types.h"
 
 namespace asteroids {
 namespace component {
@@ -14,20 +16,21 @@ namespace component {
 class PhysicsComponent : public Component {
 public:
 
-    float acceleration;
-    common::Vec2D<float> velocity;
-    common::Rotation2D rotation;
-
-    float maxSpeed;
-    float maxAcceleration;
-
+    common::LogicalQuantity maxSpeed;
+    common::LogicalQuantity maxAcceleration;
     // Constant force applied in the opposite direction of velocity.
-    float friction;
+    common::LogicalQuantity friction;
+
+    common::Vec2D<common::LogicalQuantity> velocity;
+    common::Rotation2D<common::LogicalQuantity> rotation;
+    common::LogicalQuantity acceleration;
 
     PhysicsComponent() = default;
-    PhysicsComponent(float maxSpeed, float maxAcceleration, float friction): 
+    PhysicsComponent(common::LogicalQuantity maxSpeed,
+        common::LogicalQuantity maxAcceleration,
+        common::LogicalQuantity friction): 
         maxSpeed{maxSpeed}, maxAcceleration{maxAcceleration}, friction{friction},
-        rotation_{0}, acceleration{0} {}
+        rotation{0}, acceleration{0} {}
 };
 
 } // component

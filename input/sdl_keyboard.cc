@@ -1,23 +1,19 @@
-#include "keyboard.h"
+#include "sdl_keyboard.h"
 #include <cstring>
-#include <iostream>
 
-using namespace std;
+namespace asteroids {
+namespace input {
 
-auto keyToScancode(const Keyboard::Key key) {
+auto keyToScancode(const KeyboardKey& key) {
 	switch(key) {
-		case(Keyboard::Key::A):
+		case(KeyboardKey::A):
 			return SDL_SCANCODE_A;
-			break;
-		case(Keyboard::Key::W):
+		case(KeyboardKey::W):
 			return SDL_SCANCODE_W;
-			break;
-		case(Keyboard::Key::S):
+		case(KeyboardKey::S):
 			return SDL_SCANCODE_S;
-			break;
-		case(Keyboard::Key::D):
+		case(KeyboardKey::D):
 			return SDL_SCANCODE_D;
-			break;
 		default:
 			return SDL_SCANCODE_UNKNOWN;
 	}
@@ -26,10 +22,6 @@ auto keyToScancode(const Keyboard::Key key) {
 SDLKeyboard::SDLKeyboard() {
 	memset(old_keystate_, 0, SDL_NUM_SCANCODES);
 	memcpy(current_keystate_, SDL_GetKeyboardState(nullptr), SDL_NUM_SCANCODES);
-
-	for(short i = (short)Keyboard::Key::FIRST; i <= (short)Keyboard::Key::LAST; ++i) {
-		keyList_.push_back((Keyboard::Key)i);
-	}
 }
 
 bool SDLKeyboard::update() {
@@ -41,22 +33,15 @@ bool SDLKeyboard::update() {
 	return true;
 }
 
-bool SDLKeyboard::pressedThisFrame(const Keyboard::Key k) {
-	auto scancode = keyToScancode(k);
-	return current_keystate_[scancode] && !old_keystate_[scancode];
-}
-
-bool SDLKeyboard::releasedThisFrame(const Keyboard::Key k) {
-	auto scancode = keyToScancode(k);
-	return !current_keystate_[scancode] && old_keystate_[scancode];
-}
-
-bool SDLKeyboard::pressed(const Keyboard::Key k) {
+bool SDLKeyboard::pressedAfterUpdate(const KeyboardKey& k) const {
 	auto scancode = keyToScancode(k);
 	return current_keystate_[scancode];
 }
 
-bool SDLKeyboard::pressedLastFrame(const Keyboard::Key k) {
+bool SDLKeyboard::pressedBeforeUpdate(const KeyboardKey& k) const {
 	auto scancode = keyToScancode(k);
 	return old_keystate_[scancode];
 }
+
+} // input
+} // asteroids

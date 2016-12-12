@@ -14,12 +14,14 @@
 namespace asteroids {
 namespace graphics {
 
-class RenderableInterface {
+class Renderable {
 public:
     virtual bool render(SDL_Renderer*, const SDL_Rect& src, const SDL_Rect& dest, 
-                        const float angle, const common::Vec2D<ScreenPosition> center, SDL_RendererFlip flip = SDL_FLIP_NONE) = 0;
+                        const float angle, const common::Vec2D<common::ScreenPosition> center, SDL_RendererFlip flip = SDL_FLIP_NONE) = 0;
 
-    typedef std::shared_ptr<RenderableInterface> Ptr; 
+    typedef std::shared_ptr<Renderable> Ptr;
+
+    virtual ~Renderable() {}
 };
 
 } // graphics

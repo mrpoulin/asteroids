@@ -13,7 +13,7 @@
 namespace asteroids {
 namespace graphics {
 
-class Texture : public RenderableInterface
+class Texture : public Renderable
 {
 public:
   SDL_Texture *texture_;
@@ -23,7 +23,7 @@ public:
   // Dimension height() const;
 
   bool render(SDL_Renderer*, const SDL_Rect& src, const SDL_Rect& des,
-              const float angle, const common::Vec2D<ScreenPosition> center, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
+              const float angle, const common::Vec2D<common::ScreenPosition> center, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
   virtual ~Texture();
 
   typedef std::shared_ptr<Texture> Ptr;

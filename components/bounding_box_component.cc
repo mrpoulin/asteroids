@@ -14,7 +14,6 @@ BoundingBoxComponent::BoundingBoxComponent(common::Vec2D<float>& pos, float w, f
 }
 
 bool BoundingBoxComponent::handle(message::SetScreenPositionMessage& msg) {
-    upperLeftHand_ = msg.position;
     return true;
 }
 

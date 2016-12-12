@@ -1,8 +1,13 @@
 #include "engine.h"
+#include "input/sdl_keyboard.h"
 #include <iostream>
 
 namespace asteroids {
 namespace engine {
+
+using namespace input;
+using namespace system;
+using namespace entity;
 
 void Engine::initSDL() {
 
@@ -40,9 +45,9 @@ void Engine::teardownSDL() {
 	SDL_Quit();
 }
 
-Engine::Engine(entity::EntityManager::Ptr em): entityManager_(em),
-									   		   keyboard_(Keyboard::Ptr(new SDLKeyboard())),
-									   		   inputSystem_(std::shared_ptr<InputSystem>(new InputSystem(keyboard_)))
+Engine::Engine(EntityManager::Ptr em): entityManager_(em),
+									   keyboard_(new SDLKeyboard()),
+									   inputSystem_(std::shared_ptr<InputSystem>(new InputSystem(keyboard_)))
 
 {
     initSDL();
@@ -67,7 +72,7 @@ void Engine::addInputListener(const System::Ptr system) {
 }
 
 void Engine::addContext(const Context::Ptr context) {
-	inputSystem_->registerContext(context);
+	inputSystem_->pushContext(context);
 }
 
 void Engine::run() {

@@ -14,11 +14,11 @@ namespace asteroids {
 namespace component {
 
 class BoundingBoxComponent : public Component,
-                             public message::MessageHandler<SetScreenPositionMessage> 
+                             public message::MessageHandler<message::SetScreenPositionMessage> 
 {
 public:
     BoundingBoxComponent(float x, float y, float w, float h);
-    BoundingBoxComponent(Vec2D<float>& pos, float w, float h);
+    BoundingBoxComponent(common::Vec2D<float>& pos, float w, float h);
 
     bool handle(message::SetScreenPositionMessage& msg);
 

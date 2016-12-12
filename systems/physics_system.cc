@@ -4,23 +4,35 @@
 #include "components/physics_component.h"
 #include "components/screen_position_component.h"
 
+namespace asteroids {
+namespace system {
+
+using component::PhysicsComponent;
+using component::ScreenPositionComponent;
+using common::ScreenPosition;
+using common::LogicalQuantity;
+using common::Vec2D;
+
 void PhysicsSystem::update(double delta) {
-    std::list<Entity> physicsEntities;
+    std::list<entity::Entity> physicsEntities;
     entityManager_->getEntitiesFor<PhysicsComponent>(physicsEntities);
 
     for(auto &entity : physicsEntities) {
         auto physicsComponent = entityManager_->getComponent<PhysicsComponent>(entity);
         auto screenPos = entityManager_->getComponent<ScreenPositionComponent>(entity);
 
-        float speed = euclideanNorm(physicsComponent->velocity);
+        LogicalQuantity speed = euclideanNorm(physicsComponent->velocity);
 
-        if(speed < physicsComponent->maxSpeed())
-            physicsComponent->velocity += physicsComponent->rotationVector() * (float)delta * physicsComponent->acceleration;
+        if(speed < physicsComponent->maxSpeed)
+            physicsComponent->velocity += 
+                static_cast<Vec2D<LogicalQuantity>>(physicsComponent->rotation)
+                * static_cast<LogicalQuantity>(delta)
+                * physicsComponent->acceleration;
 
         speed = euclideanNorm(physicsComponent->velocity);
 
-        Vec2D<float> dv;
-        float friction = physicsComponent->friction() * delta;
+        Vec2D<LogicalQuantity> dv;
+        float friction = physicsComponent->friction * static_cast<LogicalQuantity>(delta);
         if(speed > friction) {
             dv = friction * -(physicsComponent->velocity / speed);
         } else {
@@ -28,11 +40,13 @@ void PhysicsSystem::update(double delta) {
         }
 
        physicsComponent->velocity += dv;
-       screenPos->position += (physicsComponent->velocity - dv / 2.0f) * (float)delta;
+       Vec2D<LogicalQuantity> tmp = (physicsComponent->velocity - dv / 2.0f) * static_cast<LogicalQuantity>(delta);
+       screenPos->position.x += (ScreenPosition)tmp.x;
+       screenPos->position.y += (ScreenPosition)tmp.y;
     }
 }
 
-bool PhysicsSystem::handle(AccelerateState& s) {
+bool PhysicsSystem::handle(message::AccelerateState& s) {
     auto physicsComponent = entityManager_->getComponent<PhysicsComponent>(s.entity);
     if(physicsComponent == nullptr) return false;
 
@@ -45,13 +59,16 @@ bool PhysicsSystem::handle(AccelerateState& s) {
     return true;
 }
 
- bool PhysicsSystem::handle(RotateState& s) {
+ bool PhysicsSystem::handle(message::RotateState& s) {
      auto physicsComponent = entityManager_->getComponent<PhysicsComponent>(s.entity);
      if(physicsComponent == nullptr) return false;
 
      if(s.enabled) {
-         physicsComponent->rotate(s.degrees);
+         physicsComponent->rotation += common::degreeToRad(s.rotation);
      }
 
      return true;
  }
+
+} // system
+} // asteroids

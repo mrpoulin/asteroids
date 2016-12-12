@@ -13,12 +13,11 @@
 #include <memory>
 #include <list>
 #include <vector>
+#include "entity.h"
 #include "components/component.h"
 
 namespace asteroids {
 namespace entity {
-
-typedef unsigned long long Entity;
 
 class EntityManager final {
 public:
@@ -36,7 +35,7 @@ public:
 	void destroyEntity(const Entity& e);
 
 
-	void addComponentTo(const Entity& e, const Component::Ptr c);
+	void addComponentTo(const Entity& e, const component::Component::Ptr c);
 	
 	// TODO: This
 	// template <typename T>
@@ -62,7 +61,7 @@ public:
 
 	// Get all components of the type T
 	template <typename T>
-	void getComponents(std::vector<Component::Ptr>& results) {
+	void getComponents(std::vector<component::Component::Ptr>& results) {
 		component::ComponentId componentId = component::getComponentId<T>();
 
 		results.clear();
@@ -96,7 +95,7 @@ public:
 	typedef std::shared_ptr<EntityManager> Ptr;
 
 private:
-	std::unordered_map<ComponentId, std::unordered_map<Entity, component::Component::Ptr>> entitiesForComponent_;
+	std::unordered_map<component::ComponentId, std::unordered_map<Entity, component::Component::Ptr>> entitiesForComponent_;
 
 	// List of every entity currently in use.
 	std::list<Entity> entities_;

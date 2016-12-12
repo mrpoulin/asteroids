@@ -9,7 +9,7 @@ namespace graphics {
 }
 
 bool Texture::render(SDL_Renderer* renderer, const SDL_Rect& src, const SDL_Rect& dest,
-                     const float angle, const common::Vec2D<ScreenPosition> center, SDL_RendererFlip flip) {
+                     const float angle, const common::Vec2D<common::ScreenPosition> center, SDL_RendererFlip flip) {
 
     SDL_Point point = {center.x, center.y};
 

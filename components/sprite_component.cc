@@ -3,7 +3,7 @@
 namespace asteroids {
 namespace component {
 
-bool SpriteComponent::handle(SetSpriteSequenceMessage& msg) {
+bool SpriteComponent::handle(message::SetSpriteSequenceMessage& msg) {
     if(spriteSequences_.find(msg.newKey) == spriteSequences_.end()) {
         return false;
     }

@@ -13,6 +13,7 @@ typedef int ScreenDimension;
 
 typedef float LogicalPosition;
 typedef float LogicalDimension;
+typedef float LogicalQuantity;
 
 } // common
 } // asteroids

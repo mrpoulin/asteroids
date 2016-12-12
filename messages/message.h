@@ -36,13 +36,14 @@ bool dynamicDispatch(MessageHandlerBase* h, T& message) {
 class Message {
 	public:
 		virtual bool dispatch(MessageHandlerBase*) = 0;
+		virtual ~Message();
 };
 
 #define SetScreenPosition_MESSAGE(decl) \
-	decl(Vec2D<ScreenPosition>, position)
+	decl(common::Vec2D<common::ScreenPosition>, position)
 
 #define GetScreenPosition_MESSAGE(decl) \
-	decl(Vec2D<ScreenPosition>, position)
+	decl(common::Vec2D<common::ScreenPosition>, position)
 
 #define SetSpriteSequence_MESSAGE(decl) \
 	decl(std::string, newKey)

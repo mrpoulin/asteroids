@@ -19,10 +19,10 @@ class LogicalPositionComponent : public Component,
 	public message::MessageHandler<SetScreenPositionMessage>  
 {
 	public:
-		common::Vec2D<LogicalPosition> position;
+		common::Vec2D<common::LogicalPosition> position;
 		
 		LogicalPositionComponent() = default;
-		LogicalPositionComponent(const common::Vec2D<LogicalPosition>& startingPosition): position{startingPosition} {}
+		LogicalPositionComponent(const common::Vec2D<common::LogicalPosition>& startingPosition): position{startingPosition} {}
 };
 
 } // asteroids

@@ -13,15 +13,14 @@
 namespace asteroids {
 namespace component {
 
-class ScreenPositionComponent : public Component, 
-	public message::MessageHandler<GetScreenPositionMessage>,
-	public message::MessageHandler<SetScreenPositionMessage>  
+class ScreenPositionComponent : public Component
 {
 	public:
-		common::Vec2D<ScreenPosition> position;
+		common::Vec2D<common::ScreenPosition> position;
 		
 		ScreenPositionComponent() = default;
-		ScreenPositionComponent(const common::Vec2D<ScreenPosition>& startingPosition): position{startingPosition} {}
+		ScreenPositionComponent(const common::Vec2D<common::ScreenPosition>& startingPosition): 
+			position{startingPosition} {}
 
 		bool handle(message::GetScreenPositionMessage& msg);
 		bool handle(message::SetScreenPositionMessage& msg);

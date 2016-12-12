@@ -1,11 +1,17 @@
 #include "screen_position_component.h"
 
-bool ScreenPositionComponent::handle(GetScreenPositionMessage& msg) {
+namespace asteroids {
+namespace component {
+
+bool ScreenPositionComponent::handle(message::GetScreenPositionMessage& msg) {
 	msg.position = position;
 	return true;
 }
 
-bool ScreenPositionComponent::handle(SetScreenPositionMessage& msg) {
+bool ScreenPositionComponent::handle(message::SetScreenPositionMessage& msg) {
 	position = msg.position;
 	return true;
 }
+
+} // component
+} // asteroids

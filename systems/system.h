@@ -1,15 +1,21 @@
-#ifndef __SYSTEM_HPP__
-#define __SYSTEM_HPP__
+#ifndef SYSTEM_SYSTEM_H
+#define SYSTEM_SYSTEM_H
 
 #include <memory>
 #include "messages/message.h"
 
-class System : public MessageHandlerBase {
+namespace asteroids {
+namespace system {
+
+class System : public message::MessageHandlerBase {
 	public:
 		virtual void update(double delta) = 0;
-		virtual ~System() {};
+		virtual ~System() {}
 
 		typedef std::shared_ptr<System> Ptr;
 };
 
-#endif
+} // system
+} // asteroids
+
+#endif // SYSTEM_SYSTEM_H

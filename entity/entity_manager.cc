@@ -3,7 +3,7 @@
 namespace asteroids {
 namespace entity {
 
-using component;
+using namespace component;
 
 Entity EntityManager::nextEntity_ = 0;
 
@@ -33,7 +33,7 @@ void EntityManager::destroyEntity(const Entity& e) {
 }
 
 
-void EntityManager::addComponentTo(const Entity& e, Component::Ptr c) {
+void EntityManager::addComponentTo(const Entity& e, component::Component::Ptr c) {
     ComponentId componentId = getComponentId(*c);
 
     auto iter = entitiesForComponent_.find(componentId);

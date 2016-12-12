@@ -1,25 +1,35 @@
-#ifndef __PHYSICS_SYSTEM_H__
-#define __PHYSICS_SYSTEM_H__
+/////////////////////////////////////////////////////////////////////////////////////////
+// This system updates the physics of an object. This includes position, speed, 
+// acceleration, etc.
+/////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef SYSTEM_PHYSICS_SYSTEM_H
+#define SYSTEM_PHYSICS_SYSTEM_H
 
 #include "system.h"
+#include "messages/message.h"
 #include "entity/entity_manager.h"
-#include "input/action.h"
+#include "messages/state.h"
+
+namespace asteroids {
+namespace system {
 
 class PhysicsSystem: public System,
-                     public MessageHandler<AccelerateState>,
-                     public MessageHandler<RotateState> {
+                     public message::MessageHandler<message::AccelerateState>,
+                     public message::MessageHandler<message::RotateState> {
 public:
-    static constexpr double PI = 3.1415926535897932384626433832;
-    static constexpr double DEGREE_TO_RAD = PI/180;
 
-    PhysicsSystem(EntityManager::Ptr e): entityManager_(e) {}
+    PhysicsSystem(entity::EntityManager::Ptr e): entityManager_(e) {}
     
     virtual void update(double delta) override;
 
-    bool handle(AccelerateState& s) override;
-    bool handle(RotateState& s) override;
+    bool handle(message::AccelerateState& s) override;
+    bool handle(message::RotateState& s) override;
 private:
-    EntityManager::Ptr entityManager_;
+    entity::EntityManager::Ptr entityManager_;
 };
 
-#endif
+} // system
+} // asteroids
+
+#endif // SYSTEM_PHYSICS_SYSTEM_H

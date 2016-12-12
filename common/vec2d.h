@@ -19,7 +19,7 @@ class Vec2D {
 	T x, y;
 	
 	Vec2D(): x{0}, y{0} {}
-	Vec2D(const T& x, const T& y): x{x}, y{y} {}
+	Vec2D(const T& x1, const T& y1): x{x1}, y{y1} {}
 
 	inline const T& operator[](int idx) const {
 		if (idx == 0)
@@ -60,12 +60,17 @@ class Vec2D {
 	}
 	
 
-	inline friend bool operator==(const Vec2D& lhs, const Vec2D& rhs) const {
+	inline friend bool operator==(const Vec2D& lhs, const Vec2D& rhs) {
 		return std::tie(lhs.x, lhs.y) == std::tie(rhs.x, rhs.y);
 	}
 
-	inline friend bool operator!=(const Vec2D& lhs, const Vec2D& rhs) const {
+	inline friend bool operator!=(const Vec2D& lhs, const Vec2D& rhs) {
 		return !(lhs == rhs);
+	}
+
+	template <typename A>
+	explicit operator Vec2D<A>() const {
+		return {static_cast<A>(x), static_cast<A>(y)};
 	}
 };
 

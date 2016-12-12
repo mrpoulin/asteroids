@@ -17,6 +17,7 @@
 
 #include <map>
 #include <string>
+#include <list>
 #include "component.h"
 #include "common/game_types.h"
 #include "graphics/renderable.h"
@@ -26,40 +27,37 @@ namespace asteroids {
 namespace component {
 
 class SpriteComponent : public Component,
-    public message::MessageHandler<SetSpriteSequenceMessage> 
+    public message::MessageHandler<message::SetSpriteSequenceMessage> 
 {
 public:
     struct Frame {
-        ScreenDimension width, height;
-        ScreenPosition x, y;
+        common::ScreenPosition x, y;
+        common::ScreenDimension width, height;
         
         Frame() = default;
-        Frame(Position x, Position y, Dimension width, Dimension height): x{x}, y{y}, width{width}, height{height} {}
+        Frame(common::ScreenPosition x, common::ScreenPosition y,
+              common::ScreenPosition width, common::ScreenPosition height): x{x}, y{y}, width{width}, height{height} {}
     };
-    typedef FrameSequence std::list<Frame>;
-    typedef SequenceKey std::string;
+
+    typedef std::list<Frame> FrameSequence;
     typedef std::string SequenceKey;
 
     // Points to the underlying object that will be rendered.
-    graphics::RenderableInterface::Ptr renderable;
+    graphics::Renderable::Ptr renderable;
 
-    SpriteComponent(graphics::RenderableInterface::Ptr renderable): renderable{renderable}, currentKey_{""} {}
+    SpriteComponent(graphics::Renderable::Ptr renderable): renderable{renderable}, currentKey_{""} {}
 
-    void addFrameTo(SequenceKey sequence, const SpriteFrame& frame) {
+    void addFrameTo(SequenceKey sequence, const Frame& frame) {
         spriteSequences_[sequence].push_back(frame);
 
         // Initialize currentKey_ & currentFrame_ together if this is the first frame added.
-        if (!currentKey_) {
+        if (currentKey_.empty()) {
             currentKey_ = sequence;
-            currentFrame_ = spriteSequences_[sequence]::begin();
+            currentFrame_ = spriteSequences_[sequence].begin();
         }
     }
 
-    bool getCurrentFrame(SpriteFrame& frame) {
-        if(!currentSpriteSequence_) {
-            return false;
-        }
-
+    bool getCurrentFrame(Frame& frame) {
         if(spriteSequences_[currentKey_].size() <= 0) {
             return false;
         }
@@ -80,7 +78,7 @@ public:
         return true;
     }
 
-    bool handle(SetSpriteSequenceMessage& msg);
+    bool handle(message::SetSpriteSequenceMessage& msg);
 private:
 
     std::map<SequenceKey, FrameSequence> spriteSequences_;

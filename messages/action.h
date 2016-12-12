@@ -6,14 +6,18 @@
 #ifndef MESSAGES_ACTION_H
 #define MESSAGES_ACTION_H
 
+#include "message.h"
+
 namespace asteroids {
-namespace messages {
+namespace message {
+
+class Action : public Message {};
 
 #define ALL_ACTIONS
 
 #define DECL(T, n) T n;
 #define CREATE_ACTION(NAME) \
-	class NAME##Action : public Message { \
+	class NAME##Action : public Action { \
 	public: \
 		NAME##_ACTION(DECL) \
 		inline virtual bool dispatch(MessageHandlerBase *h) override { \
@@ -27,7 +31,7 @@ ALL_ACTIONS
 #undef DECL
 #undef ALL_ACTIONS
 
-} // messages
+} // message
 } // asteroids
 
 #endif // MESSAGES_ACTION_H

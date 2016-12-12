@@ -30,7 +30,7 @@ public:
     // The entity manager is needed by every system, therefore it needs to be exposed.
     entity::EntityManager::Ptr entityManager() { return entityManager_ ;}
 
-    Entity createEntity(const std::list<const component::Component::Ptr> components);
+    entity::Entity createEntity(const std::list<const component::Component::Ptr> components);
 
     // Systems are stored in a list. The first system added
     // is therefore the first system run.
@@ -63,7 +63,7 @@ private:
     std::list<system::System::Ptr> systems_;
 
    // ============= Input Stuff =============
-    input::Keyboard::Ptr keyboard_;
+    input::Keyboard* keyboard_;
     // The input system is required and therefore not supplied by the user.
     // It always runs first, outside of the game loop.
     // TODO unique_ptr
